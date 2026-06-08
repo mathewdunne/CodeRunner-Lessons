@@ -1,0 +1,13 @@
+.DS_Store
+
+# Local source templates used to build the lesson modules.
+AdvantageKit_KitBot2026Template/
+AdvantageKit_KitBot2026Template.zip
+AdvantageKit_SkeletonTemplate/
+AdvantageKit_SkeletonTemplate.zip
+
+# Generated Java/Gradle output.
+**/bin/
+**/build/
+**/.gradle/
+**/src/main/java/frc/robot/BuildConstants.java
