@@ -10,6 +10,7 @@ Work in `src/Main.java`. Run this lesson with the editor Run button.
 
 ## Bonus
 
+- Loop with `while (true)` so the user can keep guessing until they get it right.
 - Increase the range of possible numbers.
 - Keep score.
 - Add a maximum number of guesses and print win/loss at the end.

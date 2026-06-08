@@ -18,7 +18,8 @@ public class RobotContainer {
   }
 
   private void configureButtonBindings() {
-    // Add button bindings for the lesson here.
+    // B resets the pose so you can re-run a path. Add the rest of your bindings here.
+    controller.b().onTrue(Commands.runOnce(drive::resetPose, drive));
   }
 
   public Command getAutonomousCommand() {
