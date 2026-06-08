@@ -1,10 +1,10 @@
 # Score Predictor
 
-Work in `src/main/java/frc/robot/Robot.java`, `FrcTeam.java`, `FrcAlliance.java`, and `FrcMatch.java`. Run this lesson with the CodeRunner Driver Station and enable teleop.
+Work in `src/main/java/frc/robot/RobotContainer.java`, `FrcTeam.java`, `FrcAlliance.java`, and `FrcMatch.java`. Run this lesson with the CodeRunner Driver Station and enable teleop.
 
 ## Steps
 
-1. In `Robot.teleopInit()`, create six `FrcTeam` objects. Give each team a team number and three made-up previous match scores.
+1. In `RobotContainer.teleopInit()`, create six `FrcTeam` objects. Give each team a team number and three made-up previous match scores.
 2. Create one red alliance and one blue alliance, with three teams on each alliance.
 3. Create a `FrcMatch` with the two alliances and call `predictWinner()`.
 4. In `FrcTeam`, calculate the team's average score from `lastThreeMatchScores`.

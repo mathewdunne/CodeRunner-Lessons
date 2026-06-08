@@ -1,6 +1,6 @@
 # Timed Robot
 
-Work in `src/main/java/frc/robot/Robot.java`. Run this lesson with the CodeRunner Driver Station.
+Work in `src/main/java/frc/robot/RobotContainer.java`. Run this lesson with the CodeRunner Driver Station.
 
 ## Steps
 
