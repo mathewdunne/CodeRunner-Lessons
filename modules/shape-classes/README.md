@@ -41,8 +41,22 @@ You don't have to click **Enable** for this lesson. After you change your code, 
 
 ### 1. Create the `Rectangle` class
 
-Make a new file called `Rectangle.java` in `src/main/java/frc/robot/`, the same folder as
-`RobotContainer.java`. Put this in it:
+Each class goes in its own file. To make the file for `Rectangle`:
+
+1. In the file list on the left, open `src`, then `main`, then `java`, then `frc`, until you
+   can see the `robot` folder. That's the folder `RobotContainer.java` is in.
+2. Right-click the `robot` folder and choose **Create a new class/command**.
+
+   ![The right-click menu, with "Create a new class/command" at the bottom](images/createANewClassCommand.png)
+
+3. A list pops up at the top of the editor. Choose **Empty Class**.
+
+   ![The list of choices, with Empty Class highlighted](images/emptyClass.png)
+
+4. Type the name `Rectangle` and press **Enter**. Use a capital R, and don't add `.java`.
+
+A new file called `Rectangle.java` opens, with a `package frc.robot;` line and an empty
+`Rectangle` class already in it. Replace everything in the file with this:
 
 ```java
 package frc.robot;
