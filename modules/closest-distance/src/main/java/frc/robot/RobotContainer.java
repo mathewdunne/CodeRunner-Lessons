@@ -27,12 +27,8 @@ public class RobotContainer {
           new Translation2d(14.5, 1.8),
           new Translation2d(16.4, 7.0));
 
-  public RobotContainer() {}
-
-  /**
-   * Called every loop while the robot is running. Use this method for the closest-distance lesson.
-   */
-  public void robotPeriodic() {
+  /** Runs once, when the robot program starts. Use this for the closest-distance lesson. */
+  public RobotContainer() {
     // Start working here!
   }
 }

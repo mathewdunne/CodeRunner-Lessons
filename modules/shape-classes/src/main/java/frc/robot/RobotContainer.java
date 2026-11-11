@@ -13,11 +13,9 @@ package frc.robot;
  * Rectangle}, {@code Triangle}, and {@code Circle} classes in this same package.
  */
 public class RobotContainer {
-  public RobotContainer() {}
-
   /**
-   * Called every loop while the robot is running. Create your shapes and log their length, width,
+   * Runs once, when the robot program starts. Create your shapes and log their length, width,
    * perimeter, and area here with {@code Logger.recordOutput}.
    */
-  public void robotPeriodic() {}
+  public RobotContainer() {}
 }

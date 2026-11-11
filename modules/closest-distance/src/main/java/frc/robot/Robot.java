@@ -63,9 +63,4 @@ public class Robot extends LoggedRobot {
 
     robotContainer = new RobotContainer();
   }
-
-  @Override
-  public void robotPeriodic() {
-    robotContainer.robotPeriodic();
-  }
 }

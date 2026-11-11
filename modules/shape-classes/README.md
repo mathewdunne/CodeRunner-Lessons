@@ -10,8 +10,8 @@ as many **objects** from it as you like: a `Rectangle` class can make a 3-by-5 r
 10-by-2 rectangle, and so on.
 
 **Where does my code go?** Each shape class gets its own new file. Then, in
-`RobotContainer.java`, the `robotPeriodic()` method creates shapes and logs their values. The
-robot calls `robotPeriodic()` over and over, about 50 times every second.
+`RobotContainer.java`, the `RobotContainer()` constructor creates shapes and logs their
+values. It runs once, when the robot program starts.
 
 ## What you're making
 
@@ -119,7 +119,8 @@ values into a folder:
 Logger.recordOutput("Battery/Energy", fresh.energyWattHours());
 ```
 
-In `robotPeriodic()`, create a `Rectangle` and log four values using these exact keys:
+In the `RobotContainer()` constructor, create a `Rectangle` and log four values using these
+exact keys:
 
 | Key                   | Value                        |
 | --------------------- | ---------------------------- |
@@ -142,8 +143,8 @@ Each one is a single `Logger.recordOutput` line, like the `Battery/Energy` examp
 ### 5. Create `Triangle` and `Circle` classes and log them too
 
 Make a `Triangle.java` and a `Circle.java`, each with its own fields, constructor,
-`perimeter()`, and `area()`. Then create one of each in `robotPeriodic()` and log them using
-these exact keys:
+`perimeter()`, and `area()`. Then create one of each in the `RobotContainer()` constructor
+and log them using these exact keys:
 
 | Shape    | Keys                                                                      |
 | -------- | ------------------------------------------------------------------------- |

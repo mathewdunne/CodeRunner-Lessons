@@ -23,11 +23,12 @@ sits right on a corner of the line.
 A robot project has a lot of files, but you only need one of them:
 `src/main/java/frc/robot/RobotContainer.java`. Everything else is already set up for you.
 
-Open that file and find the comment that says `// Start working here!`. It's inside a method
-called `robotPeriodic()`, at the bottom of the file. Almost all of your code goes there.
+Open that file and find the comment that says `// Start working here!`. It's inside the
+braces after `public RobotContainer()`, at the bottom of the file. All of your code goes
+there.
 
-There's no `main` method to write this time. The robot calls `robotPeriodic()` over and over,
-about 50 times every second, for as long as the robot program is running.
+There's no `main` method to write this time. The code inside `RobotContainer()` runs once,
+when the robot program starts, a lot like `main` did.
 
 A few things are already set up for you near the top of the class:
 
@@ -45,7 +46,7 @@ Robot projects don't use the Run button. Use the **Driver Station** at the botto
 2. Wait for **Comms** and **Robot Code** to turn green.
 
 That's all you need for this lesson. You don't have to click **Enable**, because
-`robotPeriodic()` runs even when the robot is disabled.
+`RobotContainer()` runs as soon as the robot program starts.
 
 Anything you print shows up in the **Console** tab. After you change your code, click
 **Restart** to run the new version.
@@ -57,7 +58,7 @@ Anything you print shows up in the **Console** tab. After you change your code, 
 A `Translation2d` holds an x and a y, both in meters. One corner of the field is `(0, 0)`.
 x runs along the long side of the field and y runs along the short side.
 
-Add this line inside `robotPeriodic()`, right under the `// Start working here!` comment:
+Add this line inside `RobotContainer()`, right under the `// Start working here!` comment:
 
 ```java
 Translation2d targetPoint = new Translation2d(8.0, 4.0);
@@ -126,9 +127,7 @@ Here's what each part does:
   becomes the new best.
 
 > **Check your work:** click **Start** and look at the **Console** tab. A `Translation2d`
-> prints like `Translation2d(X: 3.50, Y: 6.40)`. Does it match your guess from step 1? Since
-> `robotPeriodic()` runs about 50 times a second, the same line prints over and over. That's
-> fine for a quick check. You'll switch to logging in step 4.
+> prints like `Translation2d(X: 3.50, Y: 6.40)`. Does it match your guess from step 1?
 
 ### 3. Use a random point instead
 
@@ -136,15 +135,10 @@ Here's what each part does:
 Multiplying it by the size of the field gives you a random spot that's always inside the
 field.
 
-If you picked the random point inside `robotPeriodic()`, you'd get a brand-new spot 50 times
-a second. To get one spot that stays put, create it outside of any method, the same way
-`fieldPoints` is created. That code only runs once, when the program starts.
-
-First, **delete** the `Translation2d targetPoint = ...` line from `robotPeriodic()`. Then add
-this near the top of the class, right after the `fieldPoints` list:
+**Replace** your `Translation2d targetPoint = ...` line with this:
 
 ```java
-private final Translation2d targetPoint =
+Translation2d targetPoint =
     new Translation2d(Math.random() * FIELD_LENGTH_METERS, Math.random() * FIELD_WIDTH_METERS);
 ```
 
@@ -163,7 +157,7 @@ import org.littletonrobotics.junction.Logger;
 ```
 
 Next, delete your `System.out.println(closestPoint);` line and put these three lines in its
-place, at the end of `robotPeriodic()`:
+place, at the end of `RobotContainer()`:
 
 ```java
 Logger.recordOutput("ClosestDistance/FieldPoints", fieldPoints.toArray(new Translation2d[0]));
@@ -230,11 +224,13 @@ this one line in their place:
 Translation2d closestPoint = targetPoint.nearest(fieldPoints);
 ```
 
-Keep your logging. `robotPeriodic()` should now look like this:
+Keep your logging. `RobotContainer()` should now look like this:
 
 ```java
-public void robotPeriodic() {
+public RobotContainer() {
   // Start working here!
+  Translation2d targetPoint =
+      new Translation2d(Math.random() * FIELD_LENGTH_METERS, Math.random() * FIELD_WIDTH_METERS);
   Translation2d closestPoint = targetPoint.nearest(fieldPoints);
 
   Logger.recordOutput("ClosestDistance/FieldPoints", fieldPoints.toArray(new Translation2d[0]));
@@ -258,9 +254,6 @@ public void robotPeriodic() {
   Logger.recordOutput("ClosestDistance/DistanceMeters", targetPoint.getDistance(closestPoint));
   ```
 
-- **Make a new random point every loop.** Move the `targetPoint` code to the top of
-  `robotPeriodic()`, and delete `private final` from the start of it. What happens to the two
-  heatmaps?
 - **Add more points to the field.** Add more `new Translation2d(...)` lines inside the
   `List.of(...)` at the top of the class. Put a comma between each one, but not after the
   last one. Keep them inside the field, then check that your closest-point code still works
