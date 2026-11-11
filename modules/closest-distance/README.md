@@ -247,12 +247,15 @@ public RobotContainer() {
 
 ## Bonus
 
-- **Log the distance to the closest point.** Add this line with your other logging, then
-  drag `DistanceMeters` onto the **Line Graph** tab in AdvantageScope:
+- **Log the distance to the closest point.** Add this line with your other logging:
 
   ```java
   Logger.recordOutput("ClosestDistance/DistanceMeters", targetPoint.getDistance(closestPoint));
   ```
+
+  Click **Restart**, then find `DistanceMeters` in AdvantageScope's list on the left, in the
+  same `ClosestDistance` folder as your points. The distance in meters shows up to the right
+  of the key.
 
 - **Add more points to the field.** Add more `new Translation2d(...)` lines inside the
   `List.of(...)` at the top of the class. Put a comma between each one, but not after the
