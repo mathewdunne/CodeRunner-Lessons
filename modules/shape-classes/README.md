@@ -166,8 +166,10 @@ Logger.recordOutput("Rectangle/Area", rectangle.area());
 
 > **Check your work:** click **Restart** and wait for **Comms** and **Robot Code** to turn
 > green. Click **AdvantageScope** in the top bar of CodeRunner. In the list on the left, open
-> `AdvantageKit`, then `RealOutputs`, then `Rectangle`. Drag `Perimeter` and `Area` onto the
-> **Line Graph** tab. You should see `16.0` and `15.0`.
+> `AdvantageKit`, then `RealOutputs`, then `Rectangle`. Click the arrow next to each one to
+> open it. Each value shows up to the right of its key, like this:
+>
+> ![The Rectangle folder in AdvantageScope, showing Area 15, Length 3, Perimeter 16, and Width 5](images/rectangleLogged.png)
 
 ### 5. Create the `Triangle` class
 
@@ -206,8 +208,8 @@ Logger.recordOutput("Triangle/Area", triangle.area());
 ```
 
 > **Check your work:** click **Restart**. In AdvantageScope, a `Triangle` folder should now
-> be next to `Rectangle`. A triangle with base `3` and height `4` has perimeter `12.0` and
-> area `6.0`.
+> be next to `Rectangle`. Open it to see the values. A triangle with base `3` and height `4`
+> has perimeter `12` and area `6`.
 
 ### 6. Create the `Circle` class
 
@@ -237,8 +239,8 @@ Logger.recordOutput("Circle/Area", circle.area());
 >
 > | Shape     | Input                | Perimeter      | Area           |
 > | --------- | -------------------- | -------------- | -------------- |
-> | Rectangle | length 3, width 5    | 16.0           | 15.0           |
-> | Triangle  | base 3, height 4     | 12.0           | 6.0            |
+> | Rectangle | length 3, width 5    | 16             | 15             |
+> | Triangle  | base 3, height 4     | 12             | 6              |
 > | Circle    | radius 2             | about 12.566   | about 12.566   |
 >
 > (Yes, for a circle with radius 2, the perimeter and area really are the same number.)
