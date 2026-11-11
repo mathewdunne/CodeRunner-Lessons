@@ -17,5 +17,7 @@ public class RobotContainer {
    * Runs once, when the robot program starts. Create your shapes and log their length, width,
    * perimeter, and area here with {@code Logger.recordOutput}.
    */
-  public RobotContainer() {}
+  public RobotContainer() {
+    // Start working here!
+  }
 }

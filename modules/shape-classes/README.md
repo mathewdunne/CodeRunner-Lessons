@@ -1,179 +1,225 @@
 # Perimeter and Area Part 2
 
-Work in `src/main/java/frc/robot/RobotContainer.java` and create new classes in the same
-package. Run this lesson with the CodeRunner Driver Station.
+In lesson 3 you calculated the perimeter and area of shapes, all inside one `main` method.
+This time, each kind of shape gets its own **class**.
 
-In this lesson you'll calculate the perimeter and area of shapes, where each kind of shape
-is its own **class**. A class is a blueprint. It describes what a thing *remembers* (its
-**fields**) and what it can *do* (its **methods**). Once you have a blueprint, you can build
-as many **objects** from it as you like: a `Rectangle` class can make a 3-by-5 rectangle, a
-10-by-2 rectangle, and so on.
-
-**Where does my code go?** Each shape class gets its own new file. Then, in
-`RobotContainer.java`, the `RobotContainer()` constructor creates shapes and logs their
-values. It runs once, when the robot program starts.
+A class is a blueprint. It describes what a thing *remembers* (its **fields**) and what it
+can *do* (its **methods**). Once you have a blueprint, you can build as many **objects** from
+it as you like: one `Rectangle` class can make a 3-by-5 rectangle, a 10-by-2 rectangle, and
+so on.
 
 ## What you're making
 
 `Rectangle`, `Triangle`, and `Circle` classes that each know how to calculate their own
-perimeter and area. You'll create a few shapes and see their measurements, perimeter, and
-area logged in AdvantageScope, grouped by shape (for example `Rectangle/Area`).
+perimeter and area. You'll create one of each shape and send its measurements, perimeter,
+and area to AdvantageScope, grouped by shape (for example `Rectangle/Area`).
+
+## Where does my code go?
+
+You'll work in two places, both in the `src/main/java/frc/robot/` folder:
+
+- **New files you create**, one for each shape: `Rectangle.java`, `Triangle.java`, and
+  `Circle.java`.
+- **`RobotContainer.java`**, which is already there. Find the comment that says
+  `// Start working here!`. It's inside the braces after `public RobotContainer()`. That's
+  where you create your shapes and log their values. The code there runs once, when the
+  robot program starts.
+
+Everything else in the project is already set up for you.
+
+## How to run your code
+
+Robot projects don't use the Run button. Use the **Driver Station** at the bottom of the page:
+
+1. Click **Start**.
+2. Wait for **Comms** and **Robot Code** to turn green.
+
+You don't have to click **Enable** for this lesson. After you change your code, click
+**Restart** to run the new version.
 
 ## Steps
 
-The examples below build a `Battery` class one piece at a time. Your `Rectangle` follows the
-same pattern.
-
-### 1. Create a `Rectangle` class
+### 1. Create the `Rectangle` class
 
 Make a new file called `Rectangle.java` in `src/main/java/frc/robot/`, the same folder as
-`RobotContainer.java`. Every file in that folder starts with the same `package` line:
+`RobotContainer.java`. Put this in it:
 
 ```java
 package frc.robot;
 
-public class Battery {
-  private double voltage;
-  private double capacityAmpHours;
+public class Rectangle {
+  private double length;
+  private double width;
 }
 ```
 
-The two lines inside the braces are **fields**: values every `Battery` object remembers.
-`private` means only code inside this class can use them directly.
-
-In `Rectangle.java`, create the `Rectangle` class. What does every rectangle need to
-remember? Add those as `double` fields.
+- `package frc.robot;` goes at the top of every file in this folder.
+- `length` and `width` are **fields**: values that every `Rectangle` object remembers.
+- `private` means only code inside the `Rectangle` class can use them directly.
 
 > **Common mistake:** the file name and the class name must match exactly, including the
 > capital letter. `Rectangle.java` holds `public class Rectangle`. If they don't match, Java
 > won't compile.
 
-### 2. Give it a constructor that takes `length` and `width`
+### 2. Add a constructor
 
 A **constructor** runs once, when an object is created. It has the same name as the class
-and no return type. Its job is to fill in the fields:
+and no return type. Its job is to fill in the fields.
+
+Add this inside the `Rectangle` class, under the two fields:
 
 ```java
-public class Battery {
-  private double voltage;
-  private double capacityAmpHours;
-
-  public Battery(double voltage, double capacityAmpHours) {
-    this.voltage = voltage;
-    this.capacityAmpHours = capacityAmpHours;
-  }
+public Rectangle(double length, double width) {
+  this.length = length;
+  this.width = width;
 }
 ```
 
-The constructor's inputs (its **parameters**) have the same names as the fields. `this.voltage`
-means "the field," and plain `voltage` means "the parameter that was passed in."
+The constructor's inputs (its **parameters**) have the same names as the fields.
+`this.length` means "the field", and plain `length` means "the parameter that was passed in".
+So `this.length = length;` copies the number that was passed in into the field.
 
-Add a constructor to `Rectangle` that takes a `length` and a `width` and stores them in your
-fields.
-
-> **Common mistake:** writing `voltage = voltage;` without `this.` copies the parameter onto
+> **Common mistake:** writing `length = length;` without `this.` copies the parameter onto
 > itself and never touches the field. The field stays `0.0`.
 
-### 3. Add public `perimeter()` and `area()` methods
+### 3. Add the methods
 
-A method that gives back an answer says what type it returns, and uses `return` to hand the
-answer back. Methods can use the object's own fields:
+Add these four methods inside the `Rectangle` class, under the constructor:
 
 ```java
-public double energyWattHours() {
-  return voltage * capacityAmpHours;
+public double getLength() {
+  return length;
+}
+
+public double getWidth() {
+  return width;
+}
+
+public double perimeter() {
+  // Write the perimeter formula here, using length and width.
+}
+
+public double area() {
+  // Write the area formula here, using length and width.
 }
 ```
 
-`public` means other classes (like `RobotContainer`) are allowed to call it.
+- `double` before the method name means the method gives back a `double`.
+- `return` hands that answer back to whoever called the method.
+- `public` means other classes, like `RobotContainer`, are allowed to call it.
+- `getLength()` and `getWidth()` are **getters**. The fields are `private`, so
+  `RobotContainer` can't read them directly, but it can call these methods to ask for them.
 
-Add a `perimeter()` method and an `area()` method to `Rectangle`. Both return a `double`.
+The getters are done for you. Replace the comment in `perimeter()` and in `area()` with a
+`return` line that does the math. The program won't compile until you do, because those
+methods promise to return a `double`.
 
 - **Perimeter** is the distance all the way around the outside. Picture walking around the
   rectangle: how many sides do you walk, and how long is each one?
 - **Area** is the amount of space inside.
 
-> **Check your work:** work it out by hand first. A rectangle with length `3` and width `5`
-> should have perimeter `16.0` and area `15.0`. You'll see your real answers in step 4.
+> **Think about it:** work it out by hand first. A rectangle with length `3` and width `5`
+> should have perimeter `16.0` and area `15.0`. You'll check your code against these numbers
+> in step 4.
 
-### 4. Create a rectangle and log it in `RobotContainer.java`
+### 4. Create a rectangle and log it
 
-Use `new` to build an object from a class, then call its methods with a dot:
-
-```java
-Battery fresh = new Battery(12.8, 18.0);
-double energy = fresh.energyWattHours(); // 230.4
-```
-
-To send a value to AdvantageScope, use `Logger.recordOutput`. It needs an import at the top
-of `RobotContainer.java`:
+Open `RobotContainer.java`. `Logger.recordOutput` sends a value to AdvantageScope. It needs
+an import, so add this line at the top of the file, under `package frc.robot;`:
 
 ```java
 import org.littletonrobotics.junction.Logger;
 ```
 
-The first part is the name (the **key**) the value shows up under, and the slash groups
-values into a folder:
+Then add this inside `RobotContainer()`, right under the `// Start working here!` comment:
 
 ```java
-Logger.recordOutput("Battery/Energy", fresh.energyWattHours());
+Rectangle rectangle = new Rectangle(3, 5);
+
+Logger.recordOutput("Rectangle/Length", rectangle.getLength());
+Logger.recordOutput("Rectangle/Width", rectangle.getWidth());
+Logger.recordOutput("Rectangle/Perimeter", rectangle.perimeter());
+Logger.recordOutput("Rectangle/Area", rectangle.area());
 ```
 
-In the `RobotContainer()` constructor, create a `Rectangle` and log four values using these
-exact keys:
+- `new Rectangle(3, 5)` builds a `Rectangle` object, running your constructor with
+  `length = 3` and `width = 5`.
+- `rectangle.area()` calls the `area()` method on that object. The dot means "ask this object
+  to do something".
+- The first part of each `recordOutput` line is the name (the **key**) that the value shows
+  up under. The slash groups the values into a `Rectangle` folder. The second part is the
+  value to send.
 
-| Key                   | Value                        |
-| --------------------- | ---------------------------- |
-| `Rectangle/Length`    | the rectangle's length       |
-| `Rectangle/Width`     | the rectangle's width        |
-| `Rectangle/Perimeter` | what `perimeter()` returns   |
-| `Rectangle/Area`      | what `area()` returns        |
+> **Check your work:** click **Restart** and wait for **Comms** and **Robot Code** to turn
+> green. Click **AdvantageScope** in the top bar of CodeRunner. In the list on the left, open
+> `AdvantageKit`, then `RealOutputs`, then `Rectangle`. Drag `Perimeter` and `Area` onto the
+> **Line Graph** tab. You should see `16.0` and `15.0`.
 
-Each one is a single `Logger.recordOutput` line, like the `Battery/Energy` example above.
+### 5. Create the `Triangle` class
 
-> **Think about it:** `length` and `width` are `private`, so `RobotContainer` can't read them
-> from your rectangle. You could log the numbers you passed into the constructor, or you
-> could add a small **getter** method to `Rectangle`, such as `getLength()`, that just
-> returns the field. If you later change the rectangle's size, which way means changing
-> only one number?
+Make a new file called `Triangle.java`. It works just like `Rectangle`, so copy everything
+from `Rectangle.java` into it, then change these things:
 
-> **Check your work:** run the Driver Station, open AdvantageScope, and find your `Rectangle`
-> keys (they show up inside `RealOutputs`). A 3-by-5 rectangle should show `16.0` and `15.0`.
+1. The class name, `Rectangle`, becomes `Triangle`, in both the class line and the
+   constructor.
+2. The fields `length` and `width` become `base` and `height`. Change them everywhere they're
+   used: the fields, the constructor, and the getters.
+3. The getters `getLength()` and `getWidth()` become `getBase()` and `getHeight()`.
+4. Write new formulas in `perimeter()` and `area()`.
 
-### 5. Create `Triangle` and `Circle` classes and log them too
+Treat it as a *right* triangle, the kind with a square corner, where `base` and `height` are
+the two sides that meet at the corner.
 
-Make a `Triangle.java` and a `Circle.java`, each with its own fields, constructor,
-`perimeter()`, and `area()`. Then create one of each in the `RobotContainer()` constructor
-and log them using these exact keys:
+- **Area** is one half of base times height.
+- **Perimeter** needs all three sides, but you only have two. The third side (the long,
+  slanted one) comes from the Pythagorean theorem: `c² = a² + b²`. `Math.sqrt(49)` takes a
+  square root, which here gives `7.0`, and you can square a number by multiplying it by
+  itself: `base * base`.
 
-| Shape    | Keys                                                                      |
-| -------- | ------------------------------------------------------------------------- |
-| Triangle | `Triangle/Base`, `Triangle/Height`, `Triangle/Perimeter`, `Triangle/Area` |
-| Circle   | `Circle/Radius`, `Circle/Perimeter`, `Circle/Area`                        |
+> **Common mistake:** in Java, `1 / 2` is `0`, not `0.5`. When you divide two whole numbers,
+> Java drops the decimal. So `1 / 2 * base * height` is always `0.0`. Write `0.5` instead,
+> or divide by `2.0`.
 
-**Triangle (base and height).** Treat it as a *right* triangle, the kind with a square
-corner.
+Then add this in `RobotContainer()`, under your rectangle code:
 
-- Area is one half of base times height. Be careful how you write "one half" in Java:
+```java
+Triangle triangle = new Triangle(3, 4);
 
-  ```java
-  System.out.println(7 / 2);   // 3   <- two ints: Java drops the decimal!
-  System.out.println(7.0 / 2); // 3.5 <- a double is involved, so you keep it
-  ```
+Logger.recordOutput("Triangle/Base", triangle.getBase());
+Logger.recordOutput("Triangle/Height", triangle.getHeight());
+Logger.recordOutput("Triangle/Perimeter", triangle.perimeter());
+Logger.recordOutput("Triangle/Area", triangle.area());
+```
 
-  What does `1 / 2` equal in Java? What would that do to your area?
+> **Check your work:** click **Restart**. In AdvantageScope, a `Triangle` folder should now
+> be next to `Rectangle`. A triangle with base `3` and height `4` has perimeter `12.0` and
+> area `6.0`.
 
-- For the perimeter you need all three sides, but you only have two. The third side (the
-  long, slanted one) comes from the Pythagorean theorem: `c² = a² + b²`. `Math.sqrt(49)`
-  gives `7.0`.
+### 6. Create the `Circle` class
 
-**Circle (radius).**
+Make a new file called `Circle.java`, the same way. A circle only needs one field,
+`radius`, so:
 
-- Perimeter (for a circle it's called the *circumference*) is `2 × π × radius`.
-- Area is `π × radius²`.
-- Java has π built in as `Math.PI`. Don't type out `3.14`.
+1. The class name becomes `Circle`.
+2. There's one field, `radius`, and the constructor takes one parameter, `double radius`.
+3. There's one getter, `getRadius()`.
+4. Write new formulas in `perimeter()` and `area()`.
 
-> **Check your work:**
+- **Perimeter** (for a circle it's called the *circumference*) is `2 × π × radius`.
+- **Area** is `π × radius²`.
+- Java has π built in as `Math.PI`. Use that instead of typing `3.14`.
+
+Then add this in `RobotContainer()`, under your triangle code:
+
+```java
+Circle circle = new Circle(2);
+
+Logger.recordOutput("Circle/Radius", circle.getRadius());
+Logger.recordOutput("Circle/Perimeter", circle.perimeter());
+Logger.recordOutput("Circle/Area", circle.area());
+```
+
+> **Check your work:** click **Restart**. All three shapes should match this table:
 >
 > | Shape     | Input                | Perimeter      | Area           |
 > | --------- | -------------------- | -------------- | -------------- |
@@ -185,42 +231,53 @@ corner.
 
 ## Bonus
 
-- **Create a `Shape` interface with `name`, `perimeter`, and `area`.** An **interface** is a
-  list of methods that a class promises to have. It goes in its own file, just like a class:
+- **Create a `Shape` interface.** An **interface** is a list of methods that a class promises
+  to have. Make a new file called `Shape.java` and put this in it:
+
   ```java
   package frc.robot;
 
-  public interface Mechanism {
+  public interface Shape {
     String name();
 
-    double currentDrawAmps();
-  }
-  ```
-  Notice the methods have no body, just a `;`. The classes fill in the bodies.
-- **Make every shape class implement `Shape`.** Add `implements` after the class name, then
-  make sure the class has every method the interface lists:
-  ```java
-  public class Intake implements Mechanism {
-    public String name() {
-      return "Intake";
-    }
+    double perimeter();
 
-    public double currentDrawAmps() {
-      return 20.0;
-    }
+    double area();
   }
   ```
-  Your shapes already have `perimeter()` and `area()`. What do they still need? (The methods
-  must be `public`, or Java will complain.)
-- **Store the shapes in a `Shape[]` and use a loop to log every shape.** Because every shape
-  *is a* `Shape`, one array can hold all of them:
+
+  The methods have no body, just a `;`. Each shape class fills in the bodies.
+
+- **Make every shape implement `Shape`.** Change the class line in `Rectangle.java` to:
+
   ```java
-  Mechanism[] mechanisms = {new Intake(), new Shooter()};
-  for (Mechanism m : mechanisms) {
-    System.out.println(m.name() + " draws " + m.currentDrawAmps() + " amps");
+  public class Rectangle implements Shape {
+  ```
+
+  The interface says every `Shape` has a `name()` method, so add this to `Rectangle`:
+
+  ```java
+  public String name() {
+    return "Rectangle";
   }
   ```
-  Your loop should log `<name>/Perimeter` and `<name>/Area` for every shape, so you end up
-  with the same `Rectangle/Area`, `Triangle/Area`, and `Circle/Area` keys as before. If
-  `name()` returns `"Rectangle"`, how could you use `+` to build the key
-  `"Rectangle/Area"` from it?
+
+  Do the same for `Triangle` and `Circle`, with their own names.
+
+- **Log every shape with one loop.** Because every shape *is a* `Shape`, one array can hold
+  all of them. Add this to the end of `RobotContainer()`:
+
+  ```java
+  Shape[] shapes = {rectangle, triangle, circle};
+  for (Shape shape : shapes) {
+    Logger.recordOutput(shape.name() + "/Perimeter", shape.perimeter());
+    Logger.recordOutput(shape.name() + "/Area", shape.area());
+  }
+  ```
+
+  Now delete your separate `Perimeter` and `Area` logging lines for each shape. The loop
+  logs the same keys. `shape.name() + "/Area"` sticks the two pieces of text together, so for
+  the rectangle it makes `"Rectangle/Area"`.
+
+  > **Think about it:** to add a square, how many new logging lines would you need now? How
+  > many did you need before the loop?
