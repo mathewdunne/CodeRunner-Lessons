@@ -111,26 +111,36 @@ public double getWidth() {
 
 public double perimeter() {
   // Write the perimeter formula here, using length and width.
+  // double perimeter = ...
+  // return perimeter;
 }
 
 public double area() {
   // Write the area formula here, using length and width.
+  // double area = ...
+  // return area;
 }
 ```
 
 - `double` before the method name means the method gives back a `double`.
-- `return` hands that answer back to whoever called the method.
+- `return` hands an answer back to whoever called the method, and ends the method. Look at
+  `getLength()`: `return length;` means "the answer to `getLength()` is whatever `length`
+  holds". When other code calls `getLength()`, it gets that number back.
 - `public` means other classes, like `RobotContainer`, are allowed to call it.
 - `getLength()` and `getWidth()` are **getters**. The fields are `private`, so
   `RobotContainer` can't read them directly, but it can call these methods to ask for them.
 
-The getters are done for you. Replace the comment in `perimeter()` and in `area()` with a
-`return` line that does the math. The program won't compile until you do, because those
-methods promise to return a `double`.
+The getters are done for you. In `perimeter()` and in `area()`, replace the comments with
+two lines: one that does the math and stores the answer in a `double`, and one that
+**returns** that variable. Delete the `//` too, so the lines become real code. The program
+won't compile until you do, because those methods promise to return a `double`.
 
 - **Perimeter** is the distance all the way around the outside. Picture walking around the
   rectangle: how many sides do you walk, and how long is each one?
 - **Area** is the amount of space inside.
+
+> **Common mistake:** working out the answer but forgetting the `return` line. The answer
+> stays stuck inside the method, and Java stops with a `missing return statement` error.
 
 > **Think about it:** work it out by hand first. A rectangle with length `3` and width `5`
 > should have perimeter `16.0` and area `15.0`. You'll check your code against these numbers
@@ -159,7 +169,7 @@ Logger.recordOutput("Rectangle/Area", rectangle.area());
 - `new Rectangle(3, 5)` builds a `Rectangle` object, running your constructor with
   `length = 3` and `width = 5`.
 - `rectangle.area()` calls the `area()` method on that object. The dot means "ask this object
-  to do something".
+  to do something". The number your `area()` method returns is the value that gets sent.
 - The first part of each `recordOutput` line is the name (the **key**) that the value shows
   up under. The slash groups the values into a `Rectangle` folder. The second part is the
   value to send.
@@ -173,24 +183,28 @@ Logger.recordOutput("Rectangle/Area", rectangle.area());
 
 ### 5. Create the `Triangle` class
 
-Make a new file called `Triangle.java`. It works just like `Rectangle`, so copy everything
-from `Rectangle.java` into it, then change these things:
+Make a new class called `Triangle`, the same way you made `Rectangle` in step 1. It works
+just like `Rectangle`, so replace everything in `Triangle.java` with everything from
+`Rectangle.java`, then change these things:
 
 1. The class name, `Rectangle`, becomes `Triangle`, in both the class line and the
    constructor.
 2. The fields `length` and `width` become `base` and `height`. Change them everywhere they're
    used: the fields, the constructor, and the getters.
 3. The getters `getLength()` and `getWidth()` become `getBase()` and `getHeight()`.
-4. Write new formulas in `perimeter()` and `area()`.
+4. Write new formulas in `perimeter()` and `area()`. Each one still stores its answer in a
+   `double` and returns it.
 
 Treat it as a *right* triangle, the kind with a square corner, where `base` and `height` are
 the two sides that meet at the corner.
 
 - **Area** is one half of base times height.
 - **Perimeter** needs all three sides, but you only have two. The third side (the long,
-  slanted one) comes from the Pythagorean theorem: `c² = a² + b²`. `Math.sqrt(49)` takes a
-  square root, which here gives `7.0`, and you can square a number by multiplying it by
-  itself: `base * base`.
+  slanted one) comes from the Pythagorean theorem: `c² = a² + b²`, where `a` and `b` are
+  `base` and `height`, and `c` is the slanted side. `Math.sqrt(49)` takes a square root,
+  which here gives `7.0`, and you can square a number by multiplying it by itself:
+  `base * base`. You can use more than one line: work out the slanted side first and store
+  it in its own `double`, then add up all three sides.
 
 > **Common mistake:** in Java, `1 / 2` is `0`, not `0.5`. When you divide two whole numbers,
 > Java drops the decimal. So `1 / 2 * base * height` is always `0.0`. Write `0.5` instead,
@@ -213,13 +227,15 @@ Logger.recordOutput("Triangle/Area", triangle.area());
 
 ### 6. Create the `Circle` class
 
-Make a new file called `Circle.java`, the same way. A circle only needs one field,
-`radius`, so:
+Make a new class called `Circle` and copy `Rectangle.java` into it, the same way you did
+for `Triangle`. A circle only needs one field, `radius`, so:
 
 1. The class name becomes `Circle`.
-2. There's one field, `radius`, and the constructor takes one parameter, `double radius`.
+2. There's one field, `radius`. The constructor takes one parameter, `double radius`, and
+   sets `this.radius = radius;`.
 3. There's one getter, `getRadius()`.
-4. Write new formulas in `perimeter()` and `area()`.
+4. Write new formulas in `perimeter()` and `area()`. Each one still stores its answer in a
+   `double` and returns it.
 
 - **Perimeter** (for a circle it's called the *circumference*) is `2 × π × radius`.
 - **Area** is `π × radius²`.
@@ -248,7 +264,8 @@ Logger.recordOutput("Circle/Area", circle.area());
 ## Bonus
 
 - **Create a `Shape` interface.** An **interface** is a list of methods that a class promises
-  to have. Make a new file called `Shape.java` and put this in it:
+  to have. Make a new class called `Shape` the same way as before, then replace everything
+  in `Shape.java` with this:
 
   ```java
   package frc.robot;

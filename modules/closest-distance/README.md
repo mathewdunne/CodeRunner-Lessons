@@ -103,6 +103,7 @@ double closestDistance = Double.MAX_VALUE;
 for (Translation2d point : fieldPoints) {
   // Use the distance formula to find how far point is from targetPoint.
   // Store the answer in a double called distance.
+  // double distance = ...
 
   if (distance < closestDistance) {
     closestDistance = distance;
