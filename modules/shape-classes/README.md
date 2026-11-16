@@ -201,10 +201,17 @@ the two sides that meet at the corner.
 - **Area** is one half of base times height.
 - **Perimeter** needs all three sides, but you only have two. The third side (the long,
   slanted one) comes from the Pythagorean theorem: `c² = a² + b²`, where `a` and `b` are
-  `base` and `height`, and `c` is the slanted side. `Math.sqrt(49)` takes a square root,
-  which here gives `7.0`, and you can square a number by multiplying it by itself:
-  `base * base`. You can use more than one line: work out the slanted side first and store
-  it in its own `double`, then add up all three sides.
+  `base` and `height`, and `c` is the slanted side. Take the square root of both sides to get
+  the slanted side on its own, then add up all three sides:
+
+  ```
+  slanted side = √(base² + height²)
+  perimeter    = base + height + slanted side
+  ```
+
+  To write that in Java, `Math.sqrt(49)` takes a square root, which here gives `7.0`, and you
+  can square a number by multiplying it by itself: `base * base`. Use two lines: work out the
+  slanted side first and store it in its own `double`, then add up all three sides.
 
 > **Common mistake:** in Java, `1 / 2` is `0`, not `0.5`. When you divide two whole numbers,
 > Java drops the decimal. So `1 / 2 * base * height` is always `0.0`. Write `0.5` instead,
