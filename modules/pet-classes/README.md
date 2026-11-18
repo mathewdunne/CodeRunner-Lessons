@@ -354,17 +354,37 @@ your cat or dog variables different names, change those too.
 > button code can't see your pet variables yet. Paste it at the very end, just before the
 > closing `}` of `RobotContainer()`.
 
-> **Check your work:** click **Restart**, wait for the green lights, then **enable teleop**.
-> Buttons don't do anything while the robot is disabled. Use these keys on your keyboard:
->
-> | Key   | Button | Who speaks  |
-> | ----- | ------ | ----------- |
-> | **K** | A      | your cat    |
-> | **L** | B      | your dog    |
-> | **J** | X      | your pet    |
-> | **I** | Y      | every pet   |
->
-> Each press should print what that pet says in the console.
+Now try it out with your keyboard:
+
+1. Click **Start** (or **Restart**, if it's already running) and wait for **Comms** and
+   **Robot Code** to turn green.
+2. Click the **Controls** tab on the left side of the Driver Station.
+
+   ![The Controls tab button on the left edge of the Driver Station](images/controlsTab.png)
+
+3. Choose **Keyboard (Xbox Mapping)**. Check that the **Joysticks** light turns green.
+
+   ![Keyboard (Xbox Mapping) selected, with the Joysticks light green](images/keyboardSelected.png)
+
+4. Click the **Console** tab to go back. Make sure **Joysticks** is still green, then click
+   **Enable**. Buttons don't do anything while the robot is disabled.
+
+   ![The Console tab, with Comms, Robot Code, and Joysticks all green and the robot enabled](images/consoleTabEnabled.png)
+
+5. Press these keys. Each press should print what that pet says in the console.
+
+   | Key   | Button | Who speaks  |
+   | ----- | ------ | ----------- |
+   | **K** | A      | your cat    |
+   | **L** | B      | your dog    |
+   | **J** | X      | your pet    |
+   | **I** | Y      | every pet   |
+
+   ![The console, showing Woof! and Meow! printed after key presses](images/consolePetsSpeaking.png)
+
+> **Common mistake:** pressing the keys while your code is open and selected. The letters get
+> typed into your code instead of pressing buttons. Click on the Driver Station first, then
+> press the keys.
 
 ## Bonus
 
