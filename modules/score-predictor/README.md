@@ -10,8 +10,8 @@ all in one list and handle every pet with a single loop.
 
 ## What you're making
 
-A `Cat` class and a `Dog` class. Each pet has a name and a color, and a `speak()` method that
-returns what it says. You'll send what each pet says to AdvantageScope. Then you'll add a
+A `Cat` class and a `Dog` class. Each pet has a name, a color, and a species, and a `speak()`
+method that returns what it says. You'll send each pet's info to AdvantageScope. Then you'll add a
 `Pet` interface so one loop can log every pet, add a pet of your own, and finish by making
 each pet speak when you press a controller button. When you're done, AdvantageScope will show
 something like this:
@@ -20,11 +20,17 @@ something like this:
 RealOutputs
 └── Pets
     ├── Biscuit
-    │   └── Says    Woof!
+    │   ├── Color      brown
+    │   ├── Name       Biscuit
+    │   ├── Says       Woof!
+    │   └── Species    Dog
     ├── Whiskers
-    │   └── Says    Meow!
+    │   ├── Color      orange
+    │   ├── Name       Whiskers
+    │   ├── Says       Meow!
+    │   └── Species    Cat
     └── (your pet)
-        └── Says    ...
+        └── ...
 ```
 
 ## Where does my code go?
@@ -35,7 +41,7 @@ You'll work in two places, both in the `src/main/java/frc/robot/` folder:
   choose.
 - **`RobotContainer.java`**, which is already there. Find the comment that says
   `// Start working here!`. It's inside the braces after `public RobotContainer()`. That's
-  where you create your pets and log what they say. The code there runs once, when the robot
+  where you create your pets and log their info. The code there runs once, when the robot
   program starts.
 
 Everything else in the project is already set up for you.
@@ -76,17 +82,21 @@ package frc.robot;
 public class Cat {
   private String name;
   private String color;
+  private final String species = "Cat";
 }
 ```
 
 - A `String` is a piece of text, like `"Whiskers"` or `"orange"`. A `double` field holds a
-  number, but a cat's name and color are words, so they go in `String` fields.
+  number, but a cat's name, color, and species are words, so they go in `String` fields.
 - Every `Cat` object will remember its own `name` and `color`.
+- `species` is set to `"Cat"` right where it's created. Every cat is a cat, so it's the same
+  for every `Cat` object and doesn't need to be passed in.
+- `final` means the field can never change after it's set. A cat will never turn into a dog.
 
 ### 2. Add a constructor and getters
 
 A **constructor** runs once, when an object is created. It has the same name as the class
-and no return type, and its job is to fill in the fields. Add this under the two fields:
+and no return type, and its job is to fill in the fields. Add this under the fields:
 
 ```java
 public Cat(String name, String color) {
@@ -111,8 +121,8 @@ public String getName() {
 - `return name;` hands back whatever the `name` field holds. The field is `private`, so other
   classes can't read it directly, but they can call `getName()` to ask for it.
 
-Under `getName()`, write a `getColor()` getter that returns the `color` field. It looks just
-like `getName()`.
+Under `getName()`, write a `getColor()` getter that returns the `color` field, and a
+`getSpecies()` getter that returns the `species` field. They look just like `getName()`.
 
 > **Common mistake:** writing `color = color;` without `this.` copies the parameter onto
 > itself and never touches the field. The field stays empty.
@@ -148,20 +158,25 @@ Then add this inside `RobotContainer()`, right under the `// Start working here!
 ```java
 Cat cat = new Cat("Whiskers", "orange");
 
+// Log info about your cat
+Logger.recordOutput(cat.getName() + "/Name", cat.getName());
+Logger.recordOutput(cat.getName() + "/Color", cat.getColor());
+Logger.recordOutput(cat.getName() + "/Species", cat.getSpecies());
 Logger.recordOutput(cat.getName() + "/Says", cat.speak());
 ```
 
 - The name and color are text, so they go in double quotes when you create the cat.
 - `cat.getName() + "/Says"` builds the key from the cat's name. For this cat it makes
   `"Whiskers/Says"`, so the value shows up in a `Whiskers` folder.
-- The value is whatever your `speak()` method returns.
+- The value is whatever the method after the comma returns. For `Says`, that's your
+  `speak()` method.
 
 You can use any name and color you like.
 
 > **Check your work:** click **Restart** and wait for **Comms** and **Robot Code** to turn
 > green. Click **AdvantageScope** in the top bar of CodeRunner. In the list on the left, open
-> `AdvantageKit`, then `RealOutputs`, then your cat's name. Click the arrow next to `Says` to
-> see what your cat said.
+> `AdvantageKit`, then `RealOutputs`, then your cat's name. Click the arrow next to each value
+> to open it. You should see your cat's `Color`, `Name`, `Says`, and `Species`.
 
 > **Think about it:** if you change the cat's name to `"Mittens"` and click **Restart**, what
 > will the key be? You didn't change the `recordOutput` line, so why does it change?
@@ -172,24 +187,35 @@ Make a new class called `Dog`, the same way you made `Cat`. Replace everything i
 with everything from `Cat.java`, then change these things:
 
 1. The class name, `Cat`, becomes `Dog`, in both the class line and the constructor.
-2. `speak()` returns what a dog says instead, like `"Woof!"`.
+2. The `species` field is set to `"Dog"` instead of `"Cat"`.
+3. `speak()` returns what a dog says instead, like `"Woof!"`.
 
-The fields, `getName()`, and `getColor()` stay exactly the same. Every pet has a name and a color.
+The other fields and the getters stay exactly the same. Every pet has a name, a color, and a
+species.
 
 Then add this in `RobotContainer()`, under your cat code:
 
 ```java
 Dog dog = new Dog("Biscuit", "brown");
 
+// Log info about your dog
+Logger.recordOutput(dog.getName() + "/Name", dog.getName());
+Logger.recordOutput(dog.getName() + "/Color", dog.getColor());
+Logger.recordOutput(dog.getName() + "/Species", dog.getSpecies());
 Logger.recordOutput(dog.getName() + "/Says", dog.speak());
 ```
+
+> **Common mistake:** copying the cat lines and only changing some of the `cat`s to `dog`.
+> Each line has `cat` in it twice. If you miss one, your dog's info ends up in your cat's
+> folder, or the other way around.
 
 > **Common mistake:** if you forget to rename the constructor, Java stops with an error like
 > `invalid method declaration; return type required`. A constructor must have the same name as
 > its class, so in `Dog.java` it has to be `public Dog(...)`.
 
 > **Check your work:** click **Restart**. In AdvantageScope, your dog's folder should now be
-> next to your cat's. Open it and check that your dog says something different from your cat.
+> next to your cat's. Open it and check that its species is `Dog` and it says something
+> different from your cat.
 
 ### 6. Create the `Pet` interface
 
@@ -204,6 +230,10 @@ package frc.robot;
 
 public interface Pet {
   String getName();
+
+  String getColor();
+
+  String getSpecies();
 
   String speak();
 }
@@ -220,7 +250,8 @@ public class Cat implements Pet {
 
 Do the same in `Dog.java`, with `Dog` instead of `Cat`.
 
-`Cat` and `Dog` already have `getName()` and `speak()`, so you don't need to add anything else.
+`Cat` and `Dog` already have all four of these methods, so you don't need to add anything
+else.
 
 > **Check your work:** click **Restart**. Nothing in AdvantageScope should change. That's
 > expected! The program still running means both classes keep the `Pet` promise.
@@ -244,23 +275,25 @@ A **for-each loop** runs its code once for every value in an array. Add this to 
 ```java
 Pet[] pets = {cat, dog};
 for (Pet pet : pets) {
-  // Log what this pet says, under the key "Pets/<name>/Says".
+  // Log info about every pet
+  Logger.recordOutput("Pets/" + pet.getName() + "/Name", pet.getName());
+  // TODO: log Color, Species, and Says the same way
 }
 ```
 
-Replace the comment with one `Logger.recordOutput` line that logs `pet.speak()`. Build the
-key with `+`, the same way you did in step 4, but with `"Pets/"` at the start. For the cat it
-should make `"Pets/Whiskers/Says"`.
+The first line is done for you. It's the same as your cat's `Name` line, but with `pet`
+instead of `cat`, and `"Pets/" +` at the start of the key. For the cat it makes
+`"Pets/Whiskers/Name"`. Replace the `TODO` with three more lines that do the same for
+`Color`, `Species`, and `Says`.
 
-Then delete the two `Logger.recordOutput` lines from steps 4 and 5. The loop logs every pet
-now.
+Then delete the logging lines from steps 4 and 5. The loop logs every pet now.
 
 - `pet` holds the next pet each time around the loop: first your cat, then your dog.
 - `pet.speak()` runs the `speak()` method of whichever pet it's holding. The cat meows and the
   dog woofs, even though the line of code is the same.
 
 > **Common mistake:** putting quotes around `pet.getName()`. `"Pets/" + "pet.getName()"`
-> makes the key `Pets/pet.getName()/Says` for every pet. Without the quotes, Java calls the
+> makes the key `Pets/pet.getName()/Name` for every pet. Without the quotes, Java calls the
 > method and uses the name it returns.
 
 > **Common mistake:** writing `Cat[] pets = {cat, dog};`. An array of `Cat`s can only hold
@@ -268,14 +301,14 @@ now.
 > `Pet`.
 
 > **Check your work:** click **Restart**. In AdvantageScope, open `RealOutputs`, then `Pets`.
-> Both of your pets should be in there, each with a `Says` value. (The old folders from steps 4
+> Both of your pets should be in there, each with all four values. (The old folders from steps 4
 > and 5 may still be in the list from the last run. The `Pets` folder is the one to check.)
 
 ### 8. Add a pet of your own
 
 Pick any animal you like: a hamster, a parrot, a fish, a dragon. Make a new class for it that
 implements `Pet`, the same way you made `Dog`: copy `Cat.java`, rename the class and
-constructor, and write its own `speak()`.
+constructor, set its `species`, and write its own `speak()`.
 
 Then, in `RobotContainer()`:
 
@@ -283,7 +316,7 @@ Then, in `RobotContainer()`:
 2. Add it to the array: `{cat, dog, yourPet}`.
 
 > **Check your work:** click **Restart**. Your new pet should be in the `Pets` folder with the
-> other two, saying its own thing.
+> other two, with its own species and saying its own thing.
 
 > **Think about it:** how many lines did you change in the loop to log your new pet? How many
 > would you have needed if you were still logging each pet by itself, like in step 4?
@@ -347,9 +380,6 @@ your cat or dog variables different names, change those too.
 
 ## Bonus
 
-- **Log each pet's color.** Try logging `pet.getColor()` in the loop, under
-  `Pets/<name>/Color`. Java won't allow it, even though every pet class has a `getColor()`
-  method. Why not? Add `String getColor();` to the `Pet` interface and try again.
 - **Teach your dog a trick only dogs know.** Add a `fetch()` method to `Dog` (but not to the
   `Pet` interface) that returns something like `"Fetched the ball!"`. Try calling
   `pet.fetch()` inside the loop. Why won't Java allow it, even when `pet` is holding the dog?
