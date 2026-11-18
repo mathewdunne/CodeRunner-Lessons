@@ -42,10 +42,10 @@
       "order": 50
     },
     {
-      "id": "score-predictor",
+      "id": "pet-classes",
       "title": "Pets",
       "description": "Cat and Dog classes, a Pet interface, and logging every pet with one loop.",
-      "subdir": "modules/score-predictor",
+      "subdir": "modules/pet-classes",
       "kind": "robot",
       "order": 60
     },
