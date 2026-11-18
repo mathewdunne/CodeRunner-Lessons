@@ -54,10 +54,10 @@ You don't have to click **Enable** until the last step. After you change your co
 
 ### 1. Create the `Cat` class
 
-Make the file the same way you made `Rectangle.java` in lesson 5:
+Each class goes in its own file. To make the file for `Cat`:
 
 1. In the file list on the left, open `src`, then `main`, then `java`, then `frc`, until you
-   can see the `robot` folder.
+   can see the `robot` folder. That's the folder `RobotContainer.java` is in.
 2. Right-click the `robot` folder and choose **Create a new class/command**.
 
    ![The right-click menu, with "Create a new class/command" at the bottom](images/createANewClassCommand.png)
@@ -79,22 +79,25 @@ public class Cat {
 }
 ```
 
-- A `String` is a piece of text, like `"Whiskers"` or `"orange"`. Your shapes stored numbers
-  in `double` fields. A cat's name and color are words, so they go in `String` fields.
+- A `String` is a piece of text, like `"Whiskers"` or `"orange"`. A `double` field holds a
+  number, but a cat's name and color are words, so they go in `String` fields.
 - Every `Cat` object will remember its own `name` and `color`.
 
 ### 2. Add a constructor and `getName()`
 
-The constructor fills in the fields when a `Cat` is created. It works just like the one you
-wrote for `Rectangle`, except its parameters are `String`s. Add this under the two fields,
-and fill in the two `TODO` lines:
+A **constructor** runs once, when an object is created. It has the same name as the class
+and no return type, and its job is to fill in the fields. Add this under the two fields:
 
 ```java
 public Cat(String name, String color) {
-  // TODO: copy the name parameter into the name field
+  this.name = name;
   // TODO: copy the color parameter into the color field
 }
 ```
+
+`this.name` means "the field", and plain `name` means "the parameter that was passed in". So
+`this.name = name;` copies the name that was passed in into the field. Replace the `TODO` with
+a line that does the same thing for `color`.
 
 Then add a getter for the name, under the constructor:
 
@@ -104,12 +107,12 @@ public String getName() {
 }
 ```
 
-- `String` before `getName` means the method gives back a `String`, the same way
-  `double perimeter()` gave back a `double`.
+- `String` before `getName` means the method gives back a `String`.
+- `return name;` hands back whatever the `name` field holds. The field is `private`, so other
+  classes can't read it directly, but they can call `getName()` to ask for it.
 
-> **Common mistake:** writing `name = name;` without `this.` copies the parameter onto itself
-> and never touches the field. Look back at `Rectangle.java` if you're not sure how it
-> should look.
+> **Common mistake:** writing `color = color;` without `this.` copies the parameter onto
+> itself and never touches the field. The field stays empty.
 
 ### 3. Add `speak()`
 
@@ -143,8 +146,8 @@ the name and color yourself. Delete the `//` too, so the lines become real code.
 
 ### 4. Create a cat and make it speak
 
-Open `RobotContainer.java`. Add the `Logger` import at the top of the file, under
-`package frc.robot;`, just like in lesson 5:
+Open `RobotContainer.java`. `Logger.recordOutput` sends a value to AdvantageScope. It needs
+an import, so add this line at the top of the file, under `package frc.robot;`:
 
 ```java
 import org.littletonrobotics.junction.Logger;
@@ -201,7 +204,7 @@ Logger.recordOutput(dog.getName() + "/Says", dog.speak());
 ### 6. Create the `Pet` interface
 
 Right now `Cat` and `Dog` are two separate classes. You know they're both pets, but Java
-doesn't. To Java, they're as different as a `Cat` and a `Rectangle`.
+doesn't. To Java, they have nothing to do with each other.
 
 An **interface** fixes that. It's a list of methods that a class promises to have. Make a new
 class called `Pet`, the same way as before, then replace everything in `Pet.java` with this:
@@ -245,8 +248,8 @@ type means "an array of", and the values go inside `{ }`:
 Pet[] pets = {cat, dog};
 ```
 
-You used a **for-each loop** in lesson 4 to visit every field point. It works on an array the
-same way. Add this to the end of `RobotContainer()`:
+A **for-each loop** runs its code once for every value in an array. Add this to the end of
+`RobotContainer()`:
 
 ```java
 Pet[] pets = {cat, dog};
