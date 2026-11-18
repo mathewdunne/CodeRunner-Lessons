@@ -16,22 +16,7 @@ method that returns what it says. You'll send each pet's info to AdvantageScope.
 each pet speak when you press a controller button. When you're done, AdvantageScope will show
 something like this:
 
-```
-RealOutputs
-└── Pets
-    ├── Biscuit
-    │   ├── Color      brown
-    │   ├── Name       Biscuit
-    │   ├── Says       Woof!
-    │   └── Species    Dog
-    ├── Whiskers
-    │   ├── Color      orange
-    │   ├── Name       Whiskers
-    │   ├── Says       Meow!
-    │   └── Species    Cat
-    └── (your pet)
-        └── ...
-```
+![AdvantageScope's RealOutputs list, showing the Color, Name, Says, and Species values for Biscuit the dog and Whiskers the cat](images/petInfoAdvantagescope.png)
 
 ## Where does my code go?
 
