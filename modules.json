@@ -43,8 +43,8 @@
     },
     {
       "id": "score-predictor",
-      "title": "Score Predictor",
-      "description": "Classes, arrays, averages, and a simple FRC match prediction.",
+      "title": "Pets",
+      "description": "Cat and Dog classes, a Pet interface, and logging every pet with one loop.",
       "subdir": "modules/score-predictor",
       "kind": "robot",
       "order": 60

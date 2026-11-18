@@ -8,15 +8,16 @@
 package frc.robot;
 
 /**
- * The score-predictor lesson lives here. {@link Robot} handles the AdvantageKit logging setup and
- * wires this class into the robot lifecycle, so you can focus on the lesson below. Fill in {@code
- * FrcTeam}, {@code FrcAlliance}, and {@code FrcMatch} in this same package.
+ * The pets lesson lives here. {@link Robot} handles the AdvantageKit logging setup and wires this
+ * class into the robot lifecycle, so you can focus on the lesson below. Create your {@code Cat},
+ * {@code Dog}, and {@code Pet} files in this same package.
  */
 public class RobotContainer {
-  public RobotContainer() {}
-
-  /** Called once each time teleop is enabled. */
-  public void teleopInit() {
-    // Create teams, alliances, and a match for the score predictor lesson here.
+  /**
+   * Runs once, when the robot program starts. Create your pets and log what each one says here with
+   * {@code Logger.recordOutput}.
+   */
+  public RobotContainer() {
+    // Start working here!
   }
 }

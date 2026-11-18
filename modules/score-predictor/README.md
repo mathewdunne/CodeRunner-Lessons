@@ -1,222 +1,362 @@
-# Score Predictor
+# Pets
 
-Work in `src/main/java/frc/robot/RobotContainer.java`, `FrcTeam.java`, `FrcAlliance.java`,
-and `FrcMatch.java`. Run this lesson with the CodeRunner Driver Station and enable teleop.
+In lesson 5 you built a class for each shape. Every shape knew how to work out its own
+perimeter and area. This time you'll build classes for pets, and each kind of pet knows how
+to **speak** in its own way.
 
-This lesson uses four classes that work together. The new parts are **arrays** (a list of
-values stored in one variable) and objects that hold other objects:
-
-| Class            | What it represents          | What it holds                      |
-| ---------------- | --------------------------- | ---------------------------------- |
-| `FrcTeam`        | one team                    | a team number and 3 match scores   |
-| `FrcAlliance`    | one alliance (red or blue)  | a colour and 3 `FrcTeam` objects   |
-| `FrcMatch`       | one match                   | a red and a blue `FrcAlliance`     |
-| `RobotContainer` | where you build and run it  | your teams, alliances, and match   |
-
-All four files are in `src/main/java/frc/robot/`. The other three classes already have their
-fields and constructors. You fill in the `TODO` parts.
-
-**When does my code run?** `RobotContainer.teleopInit()` runs once, each time you enable
-teleop in the Driver Station. The predictions print in the console.
+Then you'll learn how to treat different classes as the same *kind* of thing. A `Cat` and a
+`Dog` are different classes, but they're both pets. Once Java knows that, you can keep them
+all in one list and handle every pet with a single loop.
 
 ## What you're making
 
-A match predictor. You'll make up six FRC teams with their last three match scores, split
-them into a red and a blue alliance, and predict which alliance wins based on each team's
-average score. When you enable teleop, the console should print something like:
+A `Cat` class and a `Dog` class. Each pet has a name and a color, and a `speak()` method that
+returns what it says. You'll send what each pet says to AdvantageScope. Then you'll add a
+`Pet` interface so one loop can log every pet, add a pet of your own, and finish by making
+each pet speak when you press a controller button. When you're done, AdvantageScope will show
+something like this:
 
 ```
-Red predicted score: 225.0
-Blue predicted score: 210.0
-The red alliance is predicted to win!
+RealOutputs
+└── Pets
+    ├── Biscuit
+    │   └── Says    Woof! I'm Biscuit, the brown dog.
+    ├── Whiskers
+    │   └── Says    Meow! I'm Whiskers, the orange cat.
+    └── (your pet)
+        └── Says    ...
 ```
+
+## Where does my code go?
+
+You'll work in two places, both in the `src/main/java/frc/robot/` folder:
+
+- **New files you create**: `Cat.java`, `Dog.java`, `Pet.java`, and one more for a pet you
+  choose.
+- **`RobotContainer.java`**, which is already there. Find the comment that says
+  `// Start working here!`. It's inside the braces after `public RobotContainer()`. That's
+  where you create your pets and log what they say. The code there runs once, when the robot
+  program starts.
+
+Everything else in the project is already set up for you.
+
+## How to run your code
+
+Robot projects don't use the Run button. Use the **Driver Station** at the bottom of the page:
+
+1. Click **Start**.
+2. Wait for **Comms** and **Robot Code** to turn green.
+
+You don't have to click **Enable** until the last step. After you change your code, click
+**Restart** to run the new version.
 
 ## Steps
 
-Steps 1-3 build the teams, alliances, and match in `RobotContainer.java`. Steps 4-7 fill in
-the math inside the other classes.
+### 1. Create the `Cat` class
 
-### 1. Create six teams
+Make the file the same way you made `Rectangle.java` in lesson 5:
 
-An **array** stores several values of the same type in one variable. You can write one
-directly inside `{ }`:
+1. In the file list on the left, open `src`, then `main`, then `java`, then `frc`, until you
+   can see the `robot` folder.
+2. Right-click the `robot` folder and choose **Create a new class/command**.
+
+   ![The right-click menu, with "Create a new class/command" at the bottom](images/createANewClassCommand.png)
+
+3. Choose **Empty Class**.
+
+   ![The list of choices, with Empty Class highlighted](images/emptyClass.png)
+
+4. Type the name `Cat` and press **Enter**.
+
+Replace everything in `Cat.java` with this:
 
 ```java
-int[] batteryCycles = new int[] {12, 40, 7, 25};
+package frc.robot;
+
+public class Cat {
+  private String name;
+  private String color;
+}
 ```
 
-An `FrcTeam` is built from a team number and an array of its last three match scores. Here
-is one team:
+- A `String` is a piece of text, like `"Whiskers"` or `"orange"`. Your shapes stored numbers
+  in `double` fields. A cat's name and color are words, so they go in `String` fields.
+- Every `Cat` object will remember its own `name` and `color`.
+
+### 2. Add a constructor and `getName()`
+
+The constructor fills in the fields when a `Cat` is created. It works just like the one you
+wrote for `Rectangle`, except its parameters are `String`s. Add this under the two fields,
+and fill in the two `TODO` lines:
 
 ```java
-FrcTeam team1 = new FrcTeam(5885, new int[] {70, 75, 80});
+public Cat(String name, String color) {
+  // TODO: copy the name parameter into the name field
+  // TODO: copy the color parameter into the color field
+}
 ```
 
-In `RobotContainer.teleopInit()`, create six `FrcTeam` objects. Make up a team number and
-three previous match scores for each one.
-
-### 2. Create a red alliance and a blue alliance
-
-An `FrcAlliance` is built from a colour and an array of three teams. An array can hold
-objects, too:
+Then add a getter for the name, under the constructor:
 
 ```java
-FrcAlliance blueAlliance = new FrcAlliance("blue", new FrcTeam[] {team1, team2, team3});
+public String getName() {
+  return name;
+}
 ```
 
-Create a blue alliance and a red alliance in `teleopInit()`, with three teams on each. Each
-team should be on only one alliance.
+- `String` before `getName` means the method gives back a `String`, the same way
+  `double perimeter()` gave back a `double`.
 
-> **Common mistake:** the class spells it `colour` (with a **u**). If you add code that uses
-> that field later, spell it the same way.
+> **Common mistake:** writing `name = name;` without `this.` copies the parameter onto itself
+> and never touches the field. Look back at `Rectangle.java` if you're not sure how it
+> should look.
 
-### 3. Create the match and predict the winner
+### 3. Add `speak()`
 
-`FrcMatch`'s constructor takes the red alliance first, then the blue alliance:
+Add this method inside the `Cat` class, under `getName()`:
 
 ```java
-public FrcMatch(FrcAlliance redAlliance, FrcAlliance blueAlliance)
+public String speak() {
+  // Build what the cat says, using its name and color.
+  // String says = ...
+  // return says;
+}
 ```
 
-Create an `FrcMatch` in `teleopInit()` with your two alliances, then call its
-`predictWinner()` method. To call a method on an object, use a dot:
+You can stick pieces of text together with `+`. Text you type yourself goes inside double
+quotes, and fields don't:
 
 ```java
-myMatch.predictWinner();
+String greeting = "Hi, " + name + "!";
+// if name is "Whiskers", greeting is "Hi, Whiskers!"
 ```
 
-> **Check your work:** run the Driver Station and enable teleop. You should see:
-> ```
-> Red predicted score: 0.0
-> Blue predicted score: 0.0
-> It's predicted to be a tie!
-> ```
-> That's expected! The other classes still return `0.0` placeholders. The next steps fix
-> that.
+Replace the comments so `speak()` returns something like
+`Meow! I'm Whiskers, the orange cat.`, using the `name` and `color` fields instead of typing
+the name and color yourself. Delete the `//` too, so the lines become real code.
 
-### 4. Calculate each team's average score in `FrcTeam`
+> **Common mistake:** putting quotes around a field. `"name"` is the word *name*, but `name`
+> is whatever the field holds. `"I'm " + "name"` gives `I'm name`, not `I'm Whiskers`.
 
-Open `FrcTeam.java`. The constructor has a `TODO` where `averagePointsScored` is set to
-`0.0`. The team's scores are in the array `lastThreeMatchScores`.
+> **Common mistake:** forgetting the spaces. `"I'm" + name` gives `I'mWhiskers`. Put the space
+> inside the quotes: `"I'm " + name`.
 
-Reading values out of an array:
+### 4. Create a cat and make it speak
+
+Open `RobotContainer.java`. Add the `Logger` import at the top of the file, under
+`package frc.robot;`, just like in lesson 5:
 
 ```java
-int[] batteryCycles = new int[] {12, 40, 7, 25};
-int first = batteryCycles[0];       // 12  <- counting starts at 0, not 1
-int howMany = batteryCycles.length; // 4
+import org.littletonrobotics.junction.Logger;
 ```
 
-A **for-each loop** runs once for every value in an array:
+Then add this inside `RobotContainer()`, right under the `// Start working here!` comment:
 
 ```java
-int oldBatteries = 0;
-for (int cycles : batteryCycles) {
-  // `cycles` holds the next value each time around: 12, then 40, then 7, then 25
-  if (cycles > 20) {
-    oldBatteries++;
+Cat cat = new Cat("Whiskers", "orange");
+
+Logger.recordOutput(cat.getName() + "/Says", cat.speak());
+```
+
+- The name and color are text, so they go in double quotes when you create the cat.
+- `cat.getName() + "/Says"` builds the key from the cat's name. For this cat it makes
+  `"Whiskers/Says"`, so the value shows up in a `Whiskers` folder.
+- The value is whatever your `speak()` method returns.
+
+You can use any name and color you like.
+
+> **Check your work:** click **Restart** and wait for **Comms** and **Robot Code** to turn
+> green. Click **AdvantageScope** in the top bar of CodeRunner. In the list on the left, open
+> `AdvantageKit`, then `RealOutputs`, then your cat's name. Click the arrow next to `Says` to
+> see what your cat said.
+
+> **Think about it:** if you change the cat's name to `"Mittens"` and click **Restart**, what
+> will the key be? You didn't change the `recordOutput` line, so why does it change?
+
+### 5. Create the `Dog` class
+
+Make a new class called `Dog`, the same way you made `Cat`. Replace everything in `Dog.java`
+with everything from `Cat.java`, then change these things:
+
+1. The class name, `Cat`, becomes `Dog`, in both the class line and the constructor.
+2. `speak()` returns what a dog says instead, like `Woof! I'm Biscuit, the brown dog.`
+
+The fields and `getName()` stay exactly the same. Every pet has a name and a color.
+
+Then add this in `RobotContainer()`, under your cat code:
+
+```java
+Dog dog = new Dog("Biscuit", "brown");
+
+Logger.recordOutput(dog.getName() + "/Says", dog.speak());
+```
+
+> **Common mistake:** if you forget to rename the constructor, Java stops with an error like
+> `invalid method declaration; return type required`. A constructor must have the same name as
+> its class, so in `Dog.java` it has to be `public Dog(...)`.
+
+> **Check your work:** click **Restart**. In AdvantageScope, your dog's folder should now be
+> next to your cat's. Open it and check that your dog says something different from your cat.
+
+### 6. Create the `Pet` interface
+
+Right now `Cat` and `Dog` are two separate classes. You know they're both pets, but Java
+doesn't. To Java, they're as different as a `Cat` and a `Rectangle`.
+
+An **interface** fixes that. It's a list of methods that a class promises to have. Make a new
+class called `Pet`, the same way as before, then replace everything in `Pet.java` with this:
+
+```java
+package frc.robot;
+
+public interface Pet {
+  String getName();
+
+  String speak();
+}
+```
+
+- It says `interface`, not `class`.
+- The methods have no body, just a `;`. Each pet class fills in the bodies itself.
+
+Now make both classes keep the promise. Change the class line in `Cat.java` to:
+
+```java
+public class Cat implements Pet {
+```
+
+Do the same in `Dog.java`, with `Dog` instead of `Cat`.
+
+`Cat` and `Dog` already have `getName()` and `speak()`, so you don't need to add anything else.
+
+> **Check your work:** click **Restart**. Nothing in AdvantageScope should change. That's
+> expected! The program still running means both classes keep the `Pet` promise.
+
+> **Think about it:** try it out. In `Dog.java`, rename `speak()` to `bark()` and look at the
+> error. What is Java telling you? Change it back to `speak()` before you go on.
+
+### 7. Log every pet with one loop
+
+Because `Cat` and `Dog` both implement `Pet`, Java knows each one *is a* `Pet`. That means one
+**array** can hold both. An array stores several values in one variable. The `[]` after the
+type means "an array of", and the values go inside `{ }`:
+
+```java
+Pet[] pets = {cat, dog};
+```
+
+You used a **for-each loop** in lesson 4 to visit every field point. It works on an array the
+same way. Add this to the end of `RobotContainer()`:
+
+```java
+Pet[] pets = {cat, dog};
+for (Pet pet : pets) {
+  // Log what this pet says, under the key "Pets/<name>/Says".
+}
+```
+
+Replace the comment with one `Logger.recordOutput` line that logs `pet.speak()`. Build the
+key with `+`, the same way you did in step 4, but with `"Pets/"` at the start. For the cat it
+should make `"Pets/Whiskers/Says"`.
+
+Then delete the two `Logger.recordOutput` lines from steps 4 and 5. The loop logs every pet
+now.
+
+- `pet` holds the next pet each time around the loop: first your cat, then your dog.
+- `pet.speak()` runs the `speak()` method of whichever pet it's holding. The cat meows and the
+  dog woofs, even though the line of code is the same.
+
+> **Common mistake:** writing `Cat[] pets = {cat, dog};`. An array of `Cat`s can only hold
+> cats, so Java won't let the dog in. Use `Pet[]`, which can hold anything that implements
+> `Pet`.
+
+> **Check your work:** click **Restart**. In AdvantageScope, open `RealOutputs`, then `Pets`.
+> Both of your pets should be in there, each with a `Says` value. (The old folders from steps 4
+> and 5 may still be in the list from the last run. The `Pets` folder is the one to check.)
+
+### 8. Add a pet of your own
+
+Pick any animal you like: a hamster, a parrot, a fish, a dragon. Make a new class for it that
+implements `Pet`, the same way you made `Dog`: copy `Cat.java`, rename the class and
+constructor, and write its own `speak()`.
+
+Then, in `RobotContainer()`:
+
+1. Create one of your new pets, under your dog.
+2. Add it to the array: `{cat, dog, yourPet}`.
+
+> **Check your work:** click **Restart**. Your new pet should be in the `Pets` folder with the
+> other two, saying its own thing.
+
+> **Think about it:** how many lines did you change in the loop to log your new pet? How many
+> would you have needed if you were still logging each pet by itself, like in step 4?
+
+### 9. Make your pets speak with the controller
+
+So far your pets speak once, when the program starts. Now you'll paste in some controller
+code so each pet speaks when you press a button. You'll learn how controllers and commands
+work in a later lesson. For now, just paste the code and change one name.
+
+Add these two imports at the top of `RobotContainer.java`, under the `Logger` import:
+
+```java
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+```
+
+Then paste this at the very end of `RobotContainer()`, after your loop:
+
+```java
+CommandXboxController controller = new CommandXboxController(0);
+
+controller.a().onTrue(new InstantCommand(() -> System.out.println(cat.speak())));
+controller.b().onTrue(new InstantCommand(() -> System.out.println(dog.speak())));
+controller.x().onTrue(new InstantCommand(() -> System.out.println(yourPet.speak())));
+controller.y().onTrue(new InstantCommand(() -> {
+  for (Pet pet : pets) {
+    System.out.println(pet.speak());
   }
-}
+}));
 ```
 
-An **average** is the total of all the values, divided by how many values there are.
+When you click **Restart**, the project tidies up your code's spacing automatically, so the
+Y button lines may get split up differently. That's fine. The code still does the same thing.
 
-- How could you keep a running total as the loop goes through each score? Where does that
-  total variable need to be created: before the loop, or inside it?
-- Should you divide by `3`, or by `lastThreeMatchScores.length`? Which still works if
-  someone passes in four scores?
+Change `yourPet` to the name of the variable you made for your pet in step 8. If you gave
+your cat or dog variables different names, change those too.
 
-Replace the `0.0` so `averagePointsScored` is set to the team's real average.
+- `controller.a()` is the A button. `onTrue(...)` runs a command once, each time the button is
+  pressed.
+- `() ->` means "here's some code to run later". The code doesn't run now, when the program
+  starts. It runs each time the button is pressed.
+- The Y button runs the same kind of loop you wrote in step 7, so every pet speaks at once.
 
-> **Common mistake:** dividing two `int`s drops the decimal. `226 / 3` is `75`, not
-> `75.333...`. If your total is an `int`, how could you make sure a `double` is involved in
-> the division?
+> **Common mistake:** pasting the code above the lines that create your pets, or outside the
+> braces of `RobotContainer()`. Java stops with a `cannot find symbol` error because the
+> button code can't see your pet variables yet. Paste it at the very end, just before the
+> closing `}` of `RobotContainer()`.
 
-> **Common mistake:** `averagePointsScored` is `final`, which means it can be set only once.
-> Add up the total in a separate variable first, then set `averagePointsScored` one time, in
-> place of the `0.0`.
-
-### 5. Return the predicted score from `FrcTeam.predictScore()`
-
-Our prediction is simple: a team will score its average. `predictScore()` currently returns
-`0.0`. Which field already holds the answer?
-
-Change `predictScore()` so it returns the team's predicted score.
-
-> **Think about it:** `RobotContainer` could just read the average itself, if the field were
-> public. Why have a `predictScore()` method instead? (Hint: what if you later want a smarter
-> prediction, like counting the most recent match more? Which code would have to change?)
-
-> **Check your work:** a team with scores `{70, 75, 80}` should predict `75.0`. A team with
-> `{70, 75, 81}` should predict about `75.33`.
-
-### 6. Add up the alliance's score in `FrcAlliance.predictAllianceScore()`
-
-Open `FrcAlliance.java`. The alliance keeps its teams in an array called `teams`. A for-each
-loop works on an array of objects the same way it works on an array of numbers, and you can
-call a method on each object as you go:
-
-```java
-for (Battery battery : batteryCart) {
-  System.out.println(battery.getVoltage());
-}
-```
-
-The alliance's predicted score is the predicted scores of all its teams added together. Use
-a loop in `predictAllianceScore()` to add them up, and return the total.
-
-> **Check your work:** an alliance whose teams predict `75.0`, `70.0`, and `80.0` should
-> predict `225.0`.
-
-### 7. Predict the winner in `FrcMatch.predictWinner()`
-
-Open `FrcMatch.java`. `predictWinner()` already prints and logs both scores, and already has
-an `if` / `else if` / `else` that prints the winner. You need to fill in two `TODO`s:
-
-1. Set `redScore` and `blueScore` using each alliance's `predictAllianceScore()` method. The
-   alliances are stored in the fields `redAlliance` and `blueAlliance`.
-2. Replace the `false` placeholders for `redWins` and `blueWins` with score comparisons.
-
-A `boolean` can store the result of a comparison directly:
-
-```java
-boolean overheating = motorTempCelsius > 80;
-```
-
-| Operator | Means                    |
-| -------- | ------------------------ |
-| `==`     | equal to                 |
-| `<`      | less than                |
-| `>`      | greater than             |
-| `<=`     | less than or equal to    |
-| `>=`     | greater than or equal to |
-
-> **Think about it:** if the two scores are exactly equal, should `redWins` be true? Should
-> `blueWins`? Which branch of the `if` runs then?
-
-> **Check your work:** enable teleop again. The console should show both real scores and the
-> right winner. Try changing one team's scores so the other alliance wins. Then try giving
-> both alliances the same total to get a tie. The scores are also logged as
-> `Prediction/RedScore` and `Prediction/BlueScore`, so you can see them in AdvantageScope.
+> **Check your work:** click **Restart**, wait for the green lights, then **enable teleop**.
+> Buttons don't do anything while the robot is disabled. Use these keys on your keyboard:
+>
+> | Key   | Button | Who speaks  |
+> | ----- | ------ | ----------- |
+> | **K** | A      | your cat    |
+> | **L** | B      | your dog    |
+> | **J** | X      | your pet    |
+> | **I** | Y      | every pet   |
+>
+> Each press should print what that pet says in the console.
 
 ## Bonus
 
-- **Log each team's predicted score with `Logger.recordOutput`.** It takes a name (the
-  **key**) and a value, and needs `import org.littletonrobotics.junction.Logger;` at the top
-  of the file:
-  ```java
-  Logger.recordOutput("Battery/Voltage", 12.6);
-  ```
-  Log each team under the key `Teams/<team number>/PredictedScore`, for example
-  `Teams/5885/PredictedScore`. You can build that key with `+`:
-  ```java
-  "Teams/" + teamNumber + "/PredictedScore"
-  ```
-  Which class already visits every team in a loop? That's a good place to log.
-- **Add a margin of victory.** The margin is how many points the winner wins by. Subtracting
-  in the wrong order gives a negative number, so `Math.abs` can help: `Math.abs(-15.0)` is
-  `15.0`. Print it with the winner.
-- **Make the match print each team number on the winning alliance.** `FrcMatch` can't see an
-  alliance's `teams` array, because it's `private`. You could add a method to `FrcAlliance`
-  that prints its own team numbers, or one that returns the array. `FrcTeam` already has a
-  `getTeamNumber()` method you can use.
+- **Log each pet's color.** Add a `String getColor();` method to the `Pet` interface. Before
+  you change anything else, click **Restart** and look at the errors. Java won't let any pet
+  class skip a method the interface promises. Add a `getColor()` getter to every pet class,
+  then log it in the loop under `Pets/<name>/Color`.
+- **Teach your dog a trick only dogs know.** Add a `fetch()` method to `Dog` (but not to the
+  `Pet` interface) that returns something like `Biscuit fetched the ball!`. Try calling
+  `pet.fetch()` inside the loop. Why won't Java allow it, even when `pet` is holding the dog?
+  Call `dog.fetch()` outside the loop instead, and log it under `Pets/<name>/Trick`.
+- **Think about it:** what happens in AdvantageScope if two of your pets have the same name?
+  Try it and see. How could you change the key so both still show up?
