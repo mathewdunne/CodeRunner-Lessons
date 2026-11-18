@@ -20,9 +20,9 @@ something like this:
 RealOutputs
 └── Pets
     ├── Biscuit
-    │   └── Says    Woof! I'm Biscuit, the brown dog.
+    │   └── Says    Woof!
     ├── Whiskers
-    │   └── Says    Meow! I'm Whiskers, the orange cat.
+    │   └── Says    Meow!
     └── (your pet)
         └── Says    ...
 ```
@@ -83,7 +83,7 @@ public class Cat {
   number, but a cat's name and color are words, so they go in `String` fields.
 - Every `Cat` object will remember its own `name` and `color`.
 
-### 2. Add a constructor and `getName()`
+### 2. Add a constructor and getters
 
 A **constructor** runs once, when an object is created. It has the same name as the class
 and no return type, and its job is to fill in the fields. Add this under the two fields:
@@ -99,7 +99,7 @@ public Cat(String name, String color) {
 `this.name = name;` copies the name that was passed in into the field. Replace the `TODO` with
 a line that does the same thing for `color`.
 
-Then add a getter for the name, under the constructor:
+Then add a **getter** for the name, under the constructor:
 
 ```java
 public String getName() {
@@ -111,38 +111,28 @@ public String getName() {
 - `return name;` hands back whatever the `name` field holds. The field is `private`, so other
   classes can't read it directly, but they can call `getName()` to ask for it.
 
+Under `getName()`, write a `getColor()` getter that returns the `color` field. It looks just
+like `getName()`.
+
 > **Common mistake:** writing `color = color;` without `this.` copies the parameter onto
 > itself and never touches the field. The field stays empty.
 
 ### 3. Add `speak()`
 
-Add this method inside the `Cat` class, under `getName()`:
+Add this method inside the `Cat` class, under your getters:
 
 ```java
 public String speak() {
-  // Build what the cat says, using its name and color.
-  // String says = ...
-  // return says;
+  // TODO: return what a cat says
 }
 ```
 
-You can stick pieces of text together with `+`. Text you type yourself goes inside double
-quotes, and fields don't:
+Replace the `TODO` with a `return` line that returns what a cat says, like `"Meow!"`. Text you
+type yourself goes inside double quotes. The program won't compile until you do, because
+`speak()` promises to return a `String`.
 
-```java
-String greeting = "Hi, " + name + "!";
-// if name is "Whiskers", greeting is "Hi, Whiskers!"
-```
-
-Replace the comments so `speak()` returns something like
-`Meow! I'm Whiskers, the orange cat.`, using the `name` and `color` fields instead of typing
-the name and color yourself. Delete the `//` too, so the lines become real code.
-
-> **Common mistake:** putting quotes around a field. `"name"` is the word *name*, but `name`
-> is whatever the field holds. `"I'm " + "name"` gives `I'm name`, not `I'm Whiskers`.
-
-> **Common mistake:** forgetting the spaces. `"I'm" + name` gives `I'mWhiskers`. Put the space
-> inside the quotes: `"I'm " + name`.
+> **Common mistake:** forgetting the quotes. `return Meow!;` makes Java look for a variable
+> called `Meow`, and it stops with an error. Write `return "Meow!";` instead.
 
 ### 4. Create a cat and make it speak
 
@@ -182,9 +172,9 @@ Make a new class called `Dog`, the same way you made `Cat`. Replace everything i
 with everything from `Cat.java`, then change these things:
 
 1. The class name, `Cat`, becomes `Dog`, in both the class line and the constructor.
-2. `speak()` returns what a dog says instead, like `Woof! I'm Biscuit, the brown dog.`
+2. `speak()` returns what a dog says instead, like `"Woof!"`.
 
-The fields and `getName()` stay exactly the same. Every pet has a name and a color.
+The fields, `getName()`, and `getColor()` stay exactly the same. Every pet has a name and a color.
 
 Then add this in `RobotContainer()`, under your cat code:
 
@@ -268,6 +258,10 @@ now.
 - `pet` holds the next pet each time around the loop: first your cat, then your dog.
 - `pet.speak()` runs the `speak()` method of whichever pet it's holding. The cat meows and the
   dog woofs, even though the line of code is the same.
+
+> **Common mistake:** putting quotes around `pet.getName()`. `"Pets/" + "pet.getName()"`
+> makes the key `Pets/pet.getName()/Says` for every pet. Without the quotes, Java calls the
+> method and uses the name it returns.
 
 > **Common mistake:** writing `Cat[] pets = {cat, dog};`. An array of `Cat`s can only hold
 > cats, so Java won't let the dog in. Use `Pet[]`, which can hold anything that implements
@@ -353,12 +347,11 @@ your cat or dog variables different names, change those too.
 
 ## Bonus
 
-- **Log each pet's color.** Add a `String getColor();` method to the `Pet` interface. Before
-  you change anything else, click **Restart** and look at the errors. Java won't let any pet
-  class skip a method the interface promises. Add a `getColor()` getter to every pet class,
-  then log it in the loop under `Pets/<name>/Color`.
+- **Log each pet's color.** Try logging `pet.getColor()` in the loop, under
+  `Pets/<name>/Color`. Java won't allow it, even though every pet class has a `getColor()`
+  method. Why not? Add `String getColor();` to the `Pet` interface and try again.
 - **Teach your dog a trick only dogs know.** Add a `fetch()` method to `Dog` (but not to the
-  `Pet` interface) that returns something like `Biscuit fetched the ball!`. Try calling
+  `Pet` interface) that returns something like `"Fetched the ball!"`. Try calling
   `pet.fetch()` inside the loop. Why won't Java allow it, even when `pet` is holding the dog?
   Call `dog.fetch()` outside the loop instead, and log it under `Pets/<name>/Trick`.
 - **Think about it:** what happens in AdvantageScope if two of your pets have the same name?
