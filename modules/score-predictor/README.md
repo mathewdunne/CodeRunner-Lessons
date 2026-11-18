@@ -16,7 +16,7 @@ method that returns what it says. You'll send each pet's info to AdvantageScope.
 each pet speak when you press a controller button. When you're done, AdvantageScope will show
 something like this:
 
-![AdvantageScope's RealOutputs list, showing the Color, Name, Says, and Species values for Biscuit the dog and Whiskers the cat](images/petInfoAdvantagescope.png)
+![AdvantageScope's RealOutputs list, with a Pets folder showing the Color, Name, Says, and Species values for Biscuit the dog and Whiskers the cat](images/petInfoAdvantagescope.png)
 
 ## Where does my code go?
 
@@ -271,7 +271,10 @@ instead of `cat`, and `"Pets/" +` at the start of the key. For the cat it makes
 `"Pets/Whiskers/Name"`. Replace the `TODO` with three more lines that do the same for
 `Color`, `Species`, and `Says`.
 
-Then delete the logging lines from steps 4 and 5. The loop logs every pet now.
+> **Don't skip this:** delete the logging lines from steps 4 and 5, all eight of them: the
+> four under `// Log info about your cat` and the four under `// Log info about your dog`.
+> The loop logs every pet now. Keep the lines that create `cat` and `dog`, because the array
+> needs them.
 
 - `pet` holds the next pet each time around the loop: first your cat, then your dog.
 - `pet.speak()` runs the `speak()` method of whichever pet it's holding. The cat meows and the
