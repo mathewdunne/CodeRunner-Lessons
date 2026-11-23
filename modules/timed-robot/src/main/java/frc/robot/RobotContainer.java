@@ -12,15 +12,17 @@ package frc.robot;
  * forwards each lifecycle method below, so you can focus on what runs once versus every loop.
  */
 public class RobotContainer {
+  // Put your fields here.
+
   public RobotContainer() {}
 
   /** Called once each time teleop is enabled. */
   public void teleopInit() {
-    // Lesson: log "RobotState" as "TeleopInit" here.
+    // Code here runs once, each time you click Enable.
   }
 
   /** Called repeatedly (about every 20 ms) while teleop is enabled. */
   public void teleopPeriodic() {
-    // Lesson: log values that change over time, blink an LED, and read controller input here.
+    // Code here runs over and over, about every 20 ms, while the robot is enabled.
   }
 }
