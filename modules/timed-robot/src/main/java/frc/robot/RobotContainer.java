@@ -16,6 +16,11 @@ public class RobotContainer {
 
   public RobotContainer() {}
 
+  /** Called once each time the robot is disabled, including when the program first starts. */
+  public void disabledInit() {
+    // Code here runs once, each time you click Disable.
+  }
+
   /** Called once each time teleop is enabled. */
   public void teleopInit() {
     // Code here runs once, each time you click Enable.

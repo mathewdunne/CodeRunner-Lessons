@@ -2,10 +2,11 @@
 
 In lessons 4 to 6, all of your code ran **once**, when the robot program started. A real
 robot program doesn't run from top to bottom once and then stop. Instead, the robot calls
-certain methods for you at certain times. In this lesson you'll use two of them:
+certain methods for you at certain times. In this lesson you'll use three of them:
 
 | Method             | When it runs                                                      |
 | ------------------ | ----------------------------------------------------------------- |
+| `disabledInit()`   | **once**, each time you click **Disable** (and when it starts)    |
 | `teleopInit()`     | **once**, each time you click **Enable**                          |
 | `teleopPeriodic()` | **over and over** while the robot is enabled, about every 20 ms   |
 
@@ -21,17 +22,19 @@ AdvantageScope.
 ## Where does my code go?
 
 You'll work in one file: **`RobotContainer.java`**, in the `src/main/java/frc/robot/` folder.
-It has three spots marked with comments:
+It has four spots marked with comments:
 
 - `// Put your fields here.` near the top of the class. Fields are values the robot
-  remembers from one loop to the next. You'll add some in steps 3, 4, and 5.
+  remembers from one loop to the next. You'll add some in steps 2, 3, and 4.
+- Inside the braces after `public void disabledInit()`. Code here runs once, each time you
+  click **Disable**. It also runs once when the program starts, because the robot always
+  starts disabled.
 - Inside the braces after `public void teleopInit()`. Code here runs once, each time you
   click **Enable**.
 - Inside the braces after `public void teleopPeriodic()`. Code here runs over and over while
   the robot is enabled.
 
-`Robot.java` calls `teleopInit()` and `teleopPeriodic()` at the right times, so you don't need
-to edit it.
+`Robot.java` calls these methods at the right times, so you don't need to edit it.
 
 ## How to run your code
 
@@ -47,7 +50,7 @@ again.
 
 ## Steps
 
-### 1. Log a value in `teleopInit()`
+### 1. Log whether the robot is enabled or disabled
 
 Open `RobotContainer.java`. `Logger.recordOutput` sends a value to AdvantageScope. It needs
 an import, so add this line at the top of the file, under `package frc.robot;`:
@@ -60,42 +63,30 @@ Then add this inside `teleopInit()`:
 
 ```java
 Logger.recordOutput("RobotState", "TeleopInit");
-System.out.println("Teleop started!");
+```
+
+And add this inside `disabledInit()`:
+
+```java
+Logger.recordOutput("RobotState", "DisabledInit");
 ```
 
 - The first part of `recordOutput` is the name (the **key**) the value shows up under. The
   second part is the value to send.
-- `System.out.println` prints a line in the Driver Station's console.
+- Both lines use the **same** key, `"RobotState"`. Whichever method ran last decides what
+  it says.
 
-> **Check your work:** click **Restart**, wait for **Comms** and **Robot Code** to turn
-> green, then click **Enable**. The console should print `Teleop started!` **once**. Click
-> **Disable**, then **Enable** again. It prints one more time, because `teleopInit()` runs
-> each time you enable.
+> **Check your work:** click **Restart** and wait for **Comms** and **Robot Code** to turn
+> green. Click **AdvantageScope** in the top bar of CodeRunner. In the list on the left, open
+> `AdvantageKit`, then `RealOutputs`.
+>
+> 1. `RobotState` should say `DisabledInit`, because the robot starts disabled.
+> 2. Click **Enable**. It should change to `TeleopInit`.
+> 3. Click **Disable**. It should change back to `DisabledInit`.
+>
+> Click **Enable** and **Disable** a few more times and watch it change each time.
 
-### 2. Log a value in `teleopPeriodic()`
-
-Add this inside `teleopPeriodic()`:
-
-```java
-Logger.recordOutput("RobotState", "TeleopPeriodic");
-```
-
-It's the **same** key as in step 1, `"RobotState"`, but with different text.
-
-> **Check your work:** click **Restart**, then **Enable**. Click **AdvantageScope** in the top
-> bar of CodeRunner. In the list on the left, open `AdvantageKit`, then `RealOutputs`.
-> `RobotState` should say `TeleopPeriodic`.
-
-You'll never see `RobotState` say `TeleopInit` in AdvantageScope, even though the console
-shows that `teleopInit()` ran. When you click **Enable**, the robot runs `teleopInit()` and
-then `teleopPeriodic()` right after it, in the same loop. AdvantageScope only gets one value
-for each key per loop, the last one. So `TeleopPeriodic` replaces `TeleopInit` before it's
-ever sent.
-
-> **Think about it:** click **Disable**. What does `RobotState` say now? Why doesn't it
-> change?
-
-### 3. Blink an LED every loop
+### 2. Blink an LED every loop
 
 A `boolean` is `true` or `false`. You'll use one as a pretend LED: `true` means on, `false`
 means off.
@@ -107,7 +98,7 @@ The LED needs to **remember** whether it's on from one loop to the next, so it h
 private boolean ledOn = false;
 ```
 
-Then add this inside `teleopPeriodic()`, under your `RobotState` line:
+Then add this inside `teleopPeriodic()`:
 
 ```java
 ledOn = !ledOn;
@@ -135,7 +126,7 @@ Logger.recordOutput("LED/On", ledOn);
 > **Think about it:** how many times a second does your LED flip? Could a person even see a
 > real LED blinking that fast?
 
-### 4. Blink more slowly with a timer
+### 3. Blink more slowly with a timer
 
 `Timer.getFPGATimestamp()` tells you how many seconds have passed since the robot program
 started. It needs an import, so add this at the top of the file, under your `Logger` import:
@@ -151,7 +142,7 @@ this field under `ledOn`:
 private double lastFlipTime = 0;
 ```
 
-Now **replace** the two lines from step 3 (`ledOn = !ledOn;` and the `LED/On` line) with
+Now **replace** the two lines from step 2 (`ledOn = !ledOn;` and the `LED/On` line) with
 this:
 
 ```java
@@ -182,7 +173,7 @@ Replace the `TODO` with a line that sets `lastFlipTime` to the time right now. U
 
 > **Think about it:** how would you make the LED blink once every 2 seconds instead?
 
-### 5. Create an Xbox controller
+### 4. Create an Xbox controller
 
 To read a controller, you create an object for it. The class is called `XboxController`, and
 it needs an import. Add this at the top of the file, under your other imports:
@@ -203,7 +194,7 @@ controller is port `0`.
 > **Think about it:** why create the controller as a field instead of inside
 > `teleopPeriodic()`? How many controller objects would you make in one minute of driving?
 
-### 6. Log whether the A button is pressed
+### 5. Log whether the A button is pressed
 
 `XboxController` has a method for every button and stick:
 
@@ -247,7 +238,7 @@ Now try it out with your keyboard:
 > **Check your work:** in AdvantageScope, open `RealOutputs`, then `Controller`. `A` should be
 > `true` only while you're holding **K**.
 
-### 7. Log a joystick value
+### 6. Log a joystick value
 
 Add this inside `teleopPeriodic()`, under your `Controller/A` line:
 
@@ -310,4 +301,4 @@ On the keyboard, **W** pushes the left stick up and **S** pushes it down.
   Replace the `TODO` so the robot moves up and down too, using `getLeftY()`. Then, in
   AdvantageScope, click the **2D Field** tab and drag `Pose` onto the **Poses** section.
   Drive with **W**, **A**, **S**, and **D**. Does pushing up move the robot the way you
-  expect? (Look back at the end of step 7.)
+  expect? (Look back at the end of step 6.)
